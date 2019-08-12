@@ -201,6 +201,9 @@
     from .models import TodoModel
     from .forms import TodoForm
     
+    def index(requst):
+        .....
+    
     @require_POST
     def addTodo(request):
         form = TodoForm(request.POST)
