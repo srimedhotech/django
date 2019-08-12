@@ -91,6 +91,9 @@
         def __str__(self):
             return self.text
     ```
+ 4. Now we need to add this to database, use commands one by one
+ 	* python manage.py makemigrations
+ 	* python manage.py migrate
  
 ### Creating Form
  1. In the todo_app, create new file called forms.py and add the below code
