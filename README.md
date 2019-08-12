@@ -65,6 +65,24 @@
         path('', views.index, name = 'index'),
     ]
      ```
+ 5. Now goto views.py file and add the following lines
+     ```
+     #add this at the top
+     from django.http import HttpResponse
+     ....
+     ....
+     def index(request):
+         return HttpResponse('<h1>Hello World</h1>')
+     
+     ```
+    Now if you navigate to http://127.0.0.1:8000 you will see the Hello World
+    
+ ### Creating Models
+ 
+ 
+ ### Creating Form
+ 
+ 
  ### Creating Views
  
  
