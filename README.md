@@ -77,7 +77,7 @@
      ```
     Now if you navigate to http://127.0.0.1:8000 you will see the Hello World
     
- ### Creating Models
+### Creating Models
 1. Let us create a model class named ***Todo*** derived from *models.Model*
 2. We need to have two fields, one for the task text and other for the status of the task, if it is completed or not
 3. Open ***todo_app/models.py*** and add the below code
@@ -92,7 +92,7 @@
             return self.text
     ```
  
- ### Creating Form
+### Creating Form
  1. In the todo_app, create new file called forms.py and add the below code
      ````
      #todo_app/forms.py
@@ -102,27 +102,65 @@
         text = forms.CharField(max_length=40,widget=forms.TextInput())
      ````
  
- ### Creating Views
-1. Open todo_app/views.py and replace the entire code with the below.
-2. In this we are going to interact with a template called todo.html and send all this data to that template from view
+### Creating Views
+1. Open ***todo_app/views.py*** and replace the entire code with the below.
+2. In this we are going to interact with a template called ***todo.html*** and send all this data to that template from view
 
     ```
     #todo_app/views.py
     from django.shortcuts import render, redirect
     from .models import TodoModel
     from .forms import TodoForm
+    
     def index(request):
+    
         #get the list of objects using below command objects.all()
         todo_list = Todo.objects.all()
+        
         #create the form
         form = TodoForm()
+        
         #pass the data and form to the template
         context = {'tasks' : todo_list, 'form' : form}
+        
         return render(request, 'todo.html', context)
      ```
 
- 
- 
+### Creating Templates
+1. Create a folder called Templates in todo_site/ and also in todo_app/
+2. Register this path in the TEMPLATES section in settings.app so that Django knows where to look for the html templates
+    ```
+	TEMPLATES = [
+		{
+		   ....
+		   
+			'DIRS': [ os.path.join(BASE_DIR, 'todo_site/templates')],
+			'APP_DIRS': True,
+		   
+		   ...
+		},
+	]
+    ```
+3. Let us create a base template called base.html in todo_site/ folder
+4. Add the following content in base.html
+     ```
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Welcome to My todo List</title>
+	</head>
+	<body>
+		<h1>My Todo List</h1>
+		{% block content %}
+
+		{% endblock %}
+
+	</body>
+	</html>
+  ```
  
  
  
