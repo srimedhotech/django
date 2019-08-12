@@ -78,14 +78,49 @@
     Now if you navigate to http://127.0.0.1:8000 you will see the Hello World
     
  ### Creating Models
- 
+1. Let us create a model class named ***Todo*** derived from *models.Model*
+2. We need to have two fields, one for the task text and other for the status of the task, if it is completed or not
+3. Open ***todo_app/models.py*** and add the below code
+    ```
+    from django.db import models
+    
+    class Todo(models.Model):
+        text = models.CharField(max_length=80)
+        completed = models.BooleanField(default=False)
+    
+        def __str__(self):
+            return self.text
+    ```
  
  ### Creating Form
- 
+ 1. In the todo_app, create new file called forms.py and add the below code
+     ````
+     #todo_app/forms.py
+     from django import forms
+
+    class TodoForm(forms.Form):
+        text = forms.CharField(max_length=40,widget=forms.TextInput())
+     ````
  
  ### Creating Views
- 
- 
+1. Open todo_app/views.py and replace the entire code with the below.
+2. In this we are going to interact with a template called todo.html and send all this data to that template from view
+
+    ```
+    #todo_app/views.py
+    from django.shortcuts import render, redirect
+    from .models import TodoModel
+    from .forms import TodoForm
+    def index(request):
+        #get the list of objects using below command objects.all()
+        todo_list = Todo.objects.all()
+        #create the form
+        form = TodoForm()
+        #pass the data and form to the template
+        context = {'tasks' : todo_list, 'form' : form}
+        return render(request, 'todo.html', context)
+     ```
+
  
  
  
