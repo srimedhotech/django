@@ -143,7 +143,7 @@
     ```
 3. Let us create a base template called base.html in todo_site/ folder
 4. Add the following content in base.html
-     ```
+    ```
 	<!DOCTYPE html>
 	<html lang="en">
 	<head>
@@ -160,12 +160,33 @@
 
 	</body>
 	</html>
-  ```
- 
- 
- 
- 
- 
- 
- 
- 
+    ```
+5. Now let us create a new file called todo.html in todo_app/Templates/ directory
+6. Add the below code in the todo.html
+    ```
+	{% extends 'base.html' %}
+
+	{% block content %}
+	    <div id="todoform">
+		<h4>Enter your Task:</h4>
+		<form action="{% url 'add' %}" method="POST">
+		    {% csrf_token %}
+		    {{ form.text }}
+		    <button type="submit">ADD</button>
+
+		</form>
+	    </div>
+	    <hr>
+
+	    <div id='tasklist'>
+		<h4>Your tasks</h4>
+		<ul>
+		    {% for task in tasks %}
+			<li>{{ task.text }} - {{ task.completed }} </li>
+		    {% endfor %}
+		</ul>
+	    </div>
+	{% endblock %}
+	
+	```
+7. We are now displaying the form on the top and also the list of the tasks below
