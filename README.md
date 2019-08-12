@@ -205,8 +205,8 @@
     def addTodo(request):
 	form = TodoForm(request.POST)
         if form.is_valid():
-	    new_todo = TodoModel(text=request.POST['text'])
-	    new_todo.save()
+            new_todo = TodoModel(text=request.POST['text'])
+            new_todo.save()
         return redirect('/')    
     ```
  
