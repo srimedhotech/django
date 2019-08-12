@@ -190,3 +190,26 @@
 	
 	```
 7. We are now displaying the form on the top and also the list of the tasks below
+
+### Adding the task
+1. Go to todo_app/urls.py add the below entry
+   * *path('add', views.addTodo, name='add')* in the urlpatterns
+2. Go to todo_app/views.py and add the function for addTodo
+    ```
+    from django.shortcuts import render, redirect
+    from django.views.decorators.http import require_POST
+    from .models import TodoModel
+    from .forms import TodoForm
+    
+    @require_POST
+    def addTodo(request):
+	form = TodoForm(request.POST)
+        if form.is_valid():
+	    new_todo = TodoModel(text=request.POST['text'])
+	    new_todo.save()
+        return redirect('/')    
+    ```
+ 
+3. ***@require_POST*** decorator to the ***addTodo*** function in views mentions that the addTodo will accept only POST requests
+4. We are creating the form and check if it is valid, if so, we are reading the data from the post and storing it in dataase using ***save()*** command.
+5. return ***redirect("/")*** indicates that we are taking the user to home page
