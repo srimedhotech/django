@@ -91,61 +91,47 @@ Please note that we have add the registration link as /accounts/register -- not 
 9. Also you might have observed that we have added a for loop with messages. The message object is used for displaying the message
 
     ```
+    {% extends 'base.html' %}
 
-	{% extends 'base.html' %}
+    {% block content %}
 
-	{% block content %}
-
-		<div id='registerid'>
-
-			<form action="register" method="post">
-				{% csrf_token%}
-				<label for="first_name">First Name: </label><input type="text" name="first_name" placeholder="First Name"><br>
-				<label for="last_name">Last Name: </label><input type="text" name="last_name" placeholder="Last Name"><br>
-				<label for="email">E-mail:</label><input type="email" name="email" placeholder="Email"><br>
-				<label for="username">User Name:</label><input type="text" name="username" placeholder="User Name"><br>
-				<label for="password">Password: </label><input type="password" name="password" placeholder="Password"><br>
-				<label for="cpassword">Password(again):</label> <input type="password" name="cpassword" placeholder="Confirm Password"><br>
-				<input type="Submit">
-			</form>
-
-			<div>
-			{% for message in messages %}
-			<h3>{{ message }}</h3>
-			{% endfor %}
-			</div>
-		</div>
-
-
-	{% endblock %}
-
+    <div id='registerid'>
+        <form action="register" method="post">
+	{% csrf_token%}
+	    <label for="first_name">First Name: </label><input type="text" name="first_name" placeholder="First Name"><br>
+            <label for="last_name">Last Name: </label><input type="text" name="last_name" placeholder="Last Name"><br>
+	    <label for="email">E-mail:</label><input type="email" name="email" placeholder="Email"><br>
+	    <label for="username">User Name:</label><input type="text" name="username" placeholder="User Name"><br>
+	    <label for="password">Password: </label><input type="password" name="password" placeholder="Password"><br>
+	    <label for="cpassword">Password(again):</label> <input type="password" name="cpassword" placeholder="Confirm Password"><br>
+	    <input type="Submit">
+	</form>
+	<div>
+	    {% for message in messages %}
+	        <h3>{{ message }}</h3>
+	    {% endfor %}
+	</div>
+    </div>
+    {% endblock %}
     ```
 10. Similarly create a file called login.html inside the templates of accounts app and add the content given below. Similar to the registration form, Login form has User name and Password along with submit button. Any messages are printed below the form in the messages for loop
 
     ```
-	{% extends 'base.html' %}
-
-	{% block content %}
-
-
-		<div id='loginid'>
-
-			<form action="login" method="post">
-				{% csrf_token%}
-				<label for="username">User Name:</label><input type="text" name="username" placeholder="User Name"><br>
-				<label for="password">Password: </label><input type="password" name="password" placeholder="Password"><br>
-				<input type="Submit">
-			</form>
-			<div>
-			{% for message in messages %}
-			<h3>{{ message }}</h3>
-			{% endfor %}
-			</div>
-		</div>
-
-
-	{% endblock %}
-
-
+    {% extends 'base.html' %}
+    {% block content %}
+    <div id='loginid'>
+        <form action="login" method="post">
+            {% csrf_token%}
+            <label for="username">User Name:</label><input type="text" name="username" placeholder="User Name"><br>
+	    <label for="password">Password: </label><input type="password" name="password" placeholder="Password"><br>
+	    <input type="Submit">
+        </form>
+        <div>
+            {% for message in messages %}
+            <h3>{{ message }}</h3>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
     ```
 11.
