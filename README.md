@@ -264,6 +264,7 @@ We are going to show the pending tasks as URLs
 5. Now we need to add this path in the urls.py of todo_app
 6. Goto todo_app/urls.py and add the entry in urlpatterns as
 	path('complete/<todo_id>', views.completeTodo, name='complete'),
+	
 7. Next open todo_app/views.py add the ***completeTodo*** function
 	
     ```
@@ -281,7 +282,7 @@ We are going to show the pending tasks as URLs
 ### Deleting the completed task
 1. Add a button in the todo.html below the form tag to show the button "Delete Completed"
     ```
-        <div class="t20">
+        <div>
             <a href="{% url 'deletecomplete' %}"><button type="button">DELETE COMPLETED</button></a>
         </div>
     ```
@@ -289,4 +290,16 @@ We are going to show the pending tasks as URLs
     ```
 	path('deletecomplete', views.deleteCompleted, name='deletecomplete'),
     ```
-3.  Next open todo_app/views.py add the complete Todo function
+3.  Next open todo_app/views.py add the ***deleteCompleted*** function
+    ```
+	def deleteCompleted(request):
+    	    TodoModel.objects.filter(completed__exact=True).delete()    
+    	    return redirect('/')
+	    
+    #completed__exact - This will get the records whose status is completed. The name before _exact is derived from the model field 'completed' in Todo model
+    
+    ```
+4. That's it, now force refresh your browser with CTRL + SHIFT + R
+5. You should be able to see all tasks (pending and completed), mark some of the tasks as completed 
+6. Click on the DeleteCompleted Button, your completed tasks will be cleared. Also you can check the same in the database
+
