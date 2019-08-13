@@ -1,4 +1,4 @@
-# Registartion and Login
+# Registration and Login
 
 - Please see the previous notes on Todo App
 -  This is continuation to that 
@@ -83,7 +83,7 @@ Please note that we have add the registration link as /accounts/register -- not 
 	
 	```
 	def register(request):
-        return render(request, 'register.html', {})
+            return render(request, 'register.html', {})
     ```
 7. Let us create a new folder Templates inside the accounts App and also create a new file with name 'register.html' 
 8. Open register.html and add the code below
