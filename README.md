@@ -27,11 +27,11 @@
     'django.contrib.staticfiles',
 
     #add here the app name
-      'todo_app.apps.Todo_appConfig',
+      'todo_app.apps.TodoAppConfig',
     ]
   
     ```
-1. You need to know how to create this string, for this, we need to use the structure appname.apps.name_in_apps.py, so in this case it will be ***todo_app.apps.todo_appConfig*** (app folder name / apps.py without .py and the name in apps.py)
+1. You need to know how to create this string, for this, we need to use the structure appname.apps.name_in_apps.py, so in this case it will be ***todo_app.apps.TodoAppConfig*** (app folder name / apps.py without .py and the name in apps.py)
 
 ### Create database tables
 1. Whenver we create app, we need to create the database tables for the apps in INSTALLED_APPS.
@@ -202,7 +202,7 @@
     ```
     from django.shortcuts import render, redirect
     from django.views.decorators.http import require_POST
-    from .models import TodoModel
+    from .models import Todo
     from .forms import TodoForm
     
     def index(requst):
@@ -212,7 +212,7 @@
     def addTodo(request):
         form = TodoForm(request.POST)
         if form.is_valid():
-            new_todo = TodoModel(text=request.POST['text'])
+            new_todo = Todo(text=request.POST['text'])
             new_todo.save()
         return redirect('/')    
     ```
