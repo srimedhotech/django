@@ -303,7 +303,7 @@ We are going to show the pending tasks as URLs
 5. You should be able to see all tasks (pending and completed), mark some of the tasks as completed 
 6. Click on the DeleteCompleted Button, your completed tasks will be cleared. Also you can check the same in the database
 
-###Deleting all tasks (items)
+### Deleting all tasks (items)
 
 1. Add a button in the todo.html below the deleteCompleted button to show the button "Delete All"
     ```
@@ -330,12 +330,14 @@ We are going to show the pending tasks as URLs
 
 ## Handling the Todo from the Backend i.e. Admin
 1. Open admin.py in the todo_app/admin.py
-2. Now we need to register our Model ***Todo** here
+2. Now we need to register our Model ***Todo*** here
 3. Add the below entry
-- from .models import Todo
-
-- admin.site.register(Todo)
-
+    ```
+    from .models import Todo
+    
+    #Register your models here
+    admin.site.register(Todo)
+    ```
 4. If  you have not created super user, Goto command prompt and issue the command
 - python manage.py createsuperuser and provide username, email, password, repeat password.
 5. Now navigate to http://127.0.0.1/admin
