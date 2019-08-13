@@ -98,12 +98,12 @@ Please note that we have add the registration link as /accounts/register -- not 
     <div id='registerid'>
         <form action="register" method="post">
 	{% csrf_token%}
-	    <label for="first_name">First Name: </label><input type="text" name="first_name" placeholder="First Name"><br>
-            <label for="last_name">Last Name: </label><input type="text" name="last_name" placeholder="Last Name"><br>
-	    <label for="email">E-mail:</label><input type="email" name="email" placeholder="Email"><br>
-	    <label for="username">User Name:</label><input type="text" name="username" placeholder="User Name"><br>
-	    <label for="password">Password: </label><input type="password" name="password" placeholder="Password"><br>
-	    <label for="cpassword">Password(again):</label> <input type="password" name="cpassword" placeholder="Confirm Password"><br>
+	    First Name: <input type="text" name="first_name" placeholder="First Name"><br>
+            Last Name: <input type="text" name="last_name" placeholder="Last Name"><br>
+	    E-mail:<input type="email" name="email" placeholder="Email"><br>
+	    User Name:><input type="text" name="username" placeholder="User Name"><br>
+	    Password: <input type="password" name="password" placeholder="Password"><br>
+	    Password(again): <input type="password" name="cpassword" placeholder="Confirm Password"><br>
 	    <input type="Submit">
 	</form>
 	<div>
@@ -122,8 +122,8 @@ Please note that we have add the registration link as /accounts/register -- not 
     <div id='loginid'>
         <form action="login" method="post">
             {% csrf_token%}
-            <label for="username">User Name:</label><input type="text" name="username" placeholder="User Name"><br>
-	    <label for="password">Password: </label><input type="password" name="password" placeholder="Password"><br>
+            User Name: <input type="text" name="username" placeholder="User Name"><br>
+	    Password: <input type="password" name="password" placeholder="Password"><br>
 	    <input type="Submit">
         </form>
         <div>
