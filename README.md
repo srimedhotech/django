@@ -1,5 +1,13 @@
 # django
 
+## What are we going to do in this?
+We will create a todo app which will 
+* Allow to "Add Tasks"
+* Display the Tasks Added along with the Status
+* The completed tasks are striked off
+* The pending tasks are shown as URLs
+* If a pending task is clicked, then it will be converted as completed task (striked off)
+
 ## Instructions for Todo App
 
 ### Create Virtual Environment
@@ -113,7 +121,7 @@
     ```
     #todo_app/views.py
     from django.shortcuts import render, redirect
-    from .models import TodoModel
+    from .models import Todo
     from .forms import TodoForm
     
     def index(request):
@@ -220,3 +228,65 @@
 3. ***@require_POST*** decorator to the ***addTodo*** function in views mentions that the addTodo will accept only POST requests
 4. We are creating the form and check if it is valid, if so, we are reading the data from the post and storing it in dataase using ***save()*** command.
 5. return ***redirect("/")*** indicates that we are taking the user to home page
+
+### Mark the Tasks as Completed
+We are going to show the pending tasks as URLs
+1. Go to base.html and add style tag in the head
+    ```
+    <head>
+     ...
+    <style>
+        .todo-completed {
+            text-decoration: line-through;
+            background: rgba(149, 165, 166, .3);
+        }
+    </style>
+    </head>
+    ```
+2. Now goto todo.html and modify the code below the hr tag as
+
+    ```
+        <div id='tasklist'>
+        <h4>Your tasks</h4>
+        <ul>
+            {% for task in tasks %}
+                {% if task.completed %}
+                    <li class="todo-completed">{{ task.text }} </li>
+                {% else %}
+                    <a href="{% url 'complete' task.id %}"><li>{{ task.text }}</li></a>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    ```
+3. If you understand the changes, we are checking if the task is completed, if so, we are showing as striked off using the style todo-completed.
+4. If the Task is not completed, then we are displaying text of the task as a URL, but the URL will be url/complete/<id>.
+5. Now we need to add this path in the urls.py of todo_app
+6. Goto todo_app/urls.py and add the entry in urlpatterns as
+	path('complete/<todo_id>', views.completeTodo, name='complete'),
+7. Next open todo_app/views.py add the ***completeTodo*** function
+	
+    ```
+	def completeTodo(request, todo_id):
+	    todo = Todo.objects.get(pk=todo_id)
+	    todo.completed = True
+	    todo.save()
+
+	    return redirect('/')
+    ```
+8. Now refresh your browser with CTRL + SHIFT + R
+9. Add task and check if it is added as hyper link
+10. Click on the link, it will be marked as completed and striked through
+
+### Deleting the completed task
+1. Add a button in the todo.html below the form tag to show the button "Delete Completed"
+    ```
+        <div class="t20">
+            <a href="{% url 'deletecomplete' %}"><button type="button">DELETE COMPLETED</button></a>
+        </div>
+    ```
+2. In the todo_app/urls.py add the entry in urlpatterns as
+    ```
+	path('deletecomplete', views.deleteCompleted, name='deletecomplete'),
+    ```
+3.  Next open todo_app/views.py add the complete Todo function
