@@ -99,7 +99,7 @@ Please note that we have add the registration link as /accounts/register -- not 
         <form action="register" method="post">
 	{% csrf_token%}
 	    First Name: <input type="text" name="first_name" placeholder="First Name"><br>
-            Last Name: <input type="text" name="last_name" placeholder="Last Name"><br>
+	    Last Name: <input type="text" name="last_name" placeholder="Last Name"><br>
 	    E-mail:<input type="email" name="email" placeholder="Email"><br>
 	    User Name:><input type="text" name="username" placeholder="User Name"><br>
 	    Password: <input type="password" name="password" placeholder="Password"><br>
