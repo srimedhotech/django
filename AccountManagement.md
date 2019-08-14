@@ -143,6 +143,7 @@ Please note that we have add the registration link as /accounts/register -- not 
 
     ```
     #Let us import the User and auth models from django.contrib.auth.models
+    from django.shortcuts import render, redirect
     from django.contrib import messages
     from django.contrib.auth.models import User, auth
 
@@ -160,14 +161,14 @@ Please note that we have add the registration link as /accounts/register -- not 
 		if User.objects.filter(username=username)).exists():
 		    messages.info(request, 'Username is already exists ')
 		elif User.objects.filter(email=email).exists():
-		    messages.info('Email already exists')
+		    messages.info(request, 'Email already exists')
 		else:
 		    user = User.objects.create_user(username=username, password=password, 
 		    email=email, first_name=first_name, last_name=last_name)
     		    user.save()
 		return redirect('login')
 	    else:
-		messages.info("Passwords does not match")
+		messages.info(request, "Passwords does not match")
 		return redirect('/register/')
     ```
 12. In the above we have used in built method of User (create_user) by calling User.objects.create_user(...)
@@ -197,7 +198,7 @@ Please note that we have add the registration link as /accounts/register -- not 
 20. Here, finally we need to make slight changes, if the user is registered/logged in, then we need to show logout button only and hide the login and registration button.
 21. To achieve this, let us modify the body in base.html
     ```
-    <h1>Welcome to My Movie World</h1>
+    <h1>Welcome to My Todo List</h1>
     {% if user.is_authenticated %}
     <p>Welcome, {{user.first_name}}</p>
     {% endif %}
