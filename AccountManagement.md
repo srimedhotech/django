@@ -25,6 +25,8 @@ i.e. now it could be workon todoenv
 2. Add the below code for Registration, login and logout
 
     ```
+    from django.urls import path
+    from . import views
     urlpatterns = [
 	    path('register', views.register, name = 'register'),
         path('login', views.login, name='login'),
@@ -32,9 +34,9 @@ i.e. now it could be workon todoenv
     ]
     ```
 3. Goto todo_site/urls.py and add the below line
-	```
-	path('accounts/', include('accounts.urls'))
-	```
+    ```
+    path('accounts/', include('accounts.urls'))
+    ```
 4. Let us add dummy functions for now in views.py
     ```
     def login(request):
@@ -44,7 +46,7 @@ i.e. now it could be workon todoenv
     def register(request):
         pass
     ```
-5. Now let us add the Login, Registration buttons in base.html, we will add the logout button later.
+5. Now let us add the Login, Registration buttons in base.html, we will add the logout button later. This has to be added immediately after the body tag.
 
     ```
 	In the style tags add the below css
@@ -69,12 +71,15 @@ i.e. now it could be workon todoenv
 	<!-- In the body section add the below code-->
 
 	<p>Welcome </p>
-	
+
 	<div class="menu">
 		<a href="/">Home</a>
 		<a href="/accounts/register">Registration</a>
 		<a href="/accounts/login">Login</a>
 	</div>
+	
+	<h1>My Todo List</h1>
+	...
 
     ```
 Please note that we have add the registration link as /accounts/register -- not just /register, because register is part of the accounts app. Similarly for login, we will add /accounts/login
@@ -138,8 +143,8 @@ Please note that we have add the registration link as /accounts/register -- not 
 
     ```
     #Let us import the User and auth models from django.contrib.auth.models
-	
-	from django.contrib.auth.models import User, auth
+    from django.contrib import messages
+    from django.contrib.auth.models import User, auth
 
     def register(request):
         if request.method == 'POST':
@@ -153,16 +158,16 @@ Please note that we have add the registration link as /accounts/register -- not 
 	    #First check if both password match
 	    if password == cpassword:
 		if User.objects.filter(username=username)).exists():
-		    message.info(request, 'Username is already exists ')
+		    messages.info(request, 'Username is already exists ')
 		elif User.objects.filter(email=email).exists():
-		    message.info('Email already exists')
+		    messages.info('Email already exists')
 		else:
 		    user = User.objects.create_user(username=username, password=password, 
 		    email=email, first_name=first_name, last_name=last_name)
     		    user.save()
 		return redirect('login')
 	    else:
-		message.info("Passwords does not match")
+		messages.info("Passwords does not match")
 		return redirect('/register/')
     ```
 12. In the above we have used in built method of User (create_user) by calling User.objects.create_user(...)
