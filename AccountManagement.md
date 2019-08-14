@@ -166,10 +166,10 @@ Please note that we have add the registration link as /accounts/register -- not 
 		    user = User.objects.create_user(username=username, password=password, 
 		    email=email, first_name=first_name, last_name=last_name)
     		    user.save()
-		return redirect('login')
+		return redirect('/accounts/login')
 	    else:
 		messages.info(request, "Passwords does not match")
-		return redirect('/register/')
+		return redirect('/accounts/register')
     ```
 12. In the above we have used in built method of User (create_user) by calling User.objects.create_user(...)
 13. We need to do multiple checks here, First check is to verify if passwords are matching. Next step is to check if the username is already existing in the database and also verify if the email is already in the database, in all the 3 scnearios above we need to show a message using ***message*** object
@@ -188,7 +188,7 @@ Please note that we have add the registration link as /accounts/register -- not 
 	        return redirect("/")
 	    else:
 	        messages.info(request, "Invalid Credentials")
-	        return redirect('/login/')
+	        return redirect('accounts/login')
 	else:
 	    return render(request, 'login.html', {})
 
@@ -220,7 +220,7 @@ Please note that we have add the registration link as /accounts/register -- not 
     ```
     def logout(request):
 	auth.logout(request)
-	return redirect('/login/')
+	return redirect('/')
     ```
-    To explain the above, we need to call auth.logout method and pass the request. Then we need to redirec the user to login page using redirect method
+    To explain the above, we need to call auth.logout method and pass the request. Then we need to redirec the user to home page using redirect method
 27. That's it, Your Todo App is now having the Registration and Login functionality.
