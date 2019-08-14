@@ -178,17 +178,16 @@ Please note that we have add the registration link as /accounts/register -- not 
 17. Similarly now let us handle login in views.py
     ```
     def login(request):
-	if request.method == 'POST':
+        if request.method == 'POST':
 	    username = request.POST['username']
 	    password = request.POST['password']
-
-            user = auth.authenticate(username=username, password=password)
+	    user = auth.authenticate(username=username, password=password)
 	    if user is not None:
 	        auth.login(request, user)
 	        return redirect("/")
-	    else:
+            else:
 	        messages.info(request, "Invalid Credentials")
-	        return redirect('accounts/login')
+		return redirect('accounts/login')
 	else:
 	    return render(request, 'login.html', {})
 
