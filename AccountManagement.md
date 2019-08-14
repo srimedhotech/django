@@ -134,4 +134,87 @@ Please note that we have add the registration link as /accounts/register -- not 
     </div>
     {% endblock %}
     ```
-11.
+11. Now Let us add the code for register function in views.py 
+
+    ```
+    #Let us import the User and auth models from django.contrib.auth.models
+	
+	from django.contrib.auth.models import User, auth
+
+    def register(request):
+        if request.method == 'POST':
+	    first_name = request.POST['first_name']
+	    last_name = request.POST['last_name']
+	    username = request.POST['username']
+            email = request.POST['email']
+	    password = request.POST['password']
+	    cpassword = request.POST['cpassword']
+		
+	    #First check if both password match
+	    if password == cpassword:
+		if User.objects.filter(username=username)).exists():
+		    message.info(request, 'Username is already exists ')
+		elif User.objects.filter(email=email).exists():
+		    message.info('Email already exists')
+		else:
+		    user = User.objects.create_user(username=username, password=password, 
+		    email=email, first_name=first_name, last_name=last_name)
+    		    user.save()
+		return redirect('login')
+	    else:
+		message.info("Passwords does not match")
+		return redirect('/register/')
+    ```
+12. In the above we have used in built method of User (create_user) by calling User.objects.create_user(...)
+13. We need to do multiple checks here, First check is to verify if passwords are matching. Next step is to check if the username is already existing in the database and also verify if the email is already in the database, in all the 3 scnearios above we need to show a message using ***message*** object
+15. We can use ***message*** object to show the messages as info, error, warning etc.,
+16. Now refresh the browser, click on register link and fill the form and submit. You can also verify if the user is successfully created or not in the database using SQLiteDatabaseBrowser tool.(You can download this from https://sqlitebrowser.org/dl/)
+17. Similarly now let us handle login in views.py
+    ```
+    def login(request):
+	if request.method == 'POST':
+	    username = request.POST['username']
+	    password = request.POST['password']
+
+            user = auth.authenticate(username=username, password=password)
+	    if user is not None:
+	        auth.login(request, user)
+	        return redirect("/")
+	    else:
+	        messages.info(request, "Invalid Credentials")
+	        return redirect('/login/')
+	else:
+	    return render(request, 'login.html', {})
+
+    ```
+18. To verify if the user can login, we can use auth.authenticate method by passing the username and password and it will return a user object. If user is not present, it will return None, otherwise it will return the user. We will now login the user by calling ***user.login*** method by passing the user object that we got from auth.authenticate. If the user is None, then we need to show message "Invalid Credentials" and redirect the user to the login page.
+19. You can test this by going to http://127.0.0.1 and clicking on login link 
+20. Here, finally we need to make slight changes, if the user is registered/logged in, then we need to show logout button only and hide the login and registration button.
+21. To achieve this, let us modify the body in base.html
+    ```
+    <h1>Welcome to My Movie World</h1>
+    {% if user.is_authenticated %}
+    <p>Welcome, {{user.first_name}}</p>
+    {% endif %}
+    <div class="menu">
+	<a href="/">Home</a>
+	{% if user.is_authenticated %}
+	    <a href="/accounts/logout">Logout</a>
+	{% else %}
+            <a href="/accounts/register">Registration</a>
+	    <a href="/accounts/login">Login</a>
+	{% endif %}
+	</div>
+    ```
+22. First we have added a new anchor tags with log out i.e. /accounts/logout. Next, we are checking if the user is authenticated and based on that we are showing the respective buttons. In this, if the user is authenticated, we are showing only logout and not displaying the Registration and Login buttons
+23. Also, we will show the welcome message with user name so we have added welcome, {{user.first_name}}
+24. Now test all scenarios and see if the proper error messages are shown to the user in both registration and login
+25. Last, we need to handle the logout, if the user clicks on logout, we need to logout the user and take him back to login page
+26. We will achieve the same by adding the below code in views.py
+    ```
+    def logout(request):
+	auth.logout(request)
+	return redirect('/login/')
+    ```
+    To explain the above, we need to call auth.logout method and pass the request. Then we need to redirec the user to login page using redirect method
+27. That's it, Your Todo App is now having the Registration and Login functionality.
