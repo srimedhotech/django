@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div.gallery {
+  border: 1px solid #ccc;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.responsive {
+  padding: 0 6px;
+  float: left;
+  width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px) {
+  .responsive {
+    width: 49.99999%;
+    margin: 6px 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .responsive {
+    width: 100%;
+  }
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+h2, h4{
+  text-align: center;
+}
+.center{
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+
+<h2>Our Movie List</h2>
+{% for movie in movielist%}
+<div class="responsive">
+  <div class="gallery">
+    <a target="_blank" href="{{ movie.title }}.html">
+      <p class="center">{{ movie.title }}</p>
+      <img src= "{{ movie.img.url }}" width="600" height="400">
+    </a>
+    <div class="desc">{{ movie.description}}</div>
+  </div>
+</div>
+{% endfor %}
+<div class="clearfix"></div>
+
+</body>
+</html>
+{% endblock %}

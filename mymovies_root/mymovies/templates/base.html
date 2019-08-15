@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Welcome to My Movies</title>
+	<!--
+	<link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
+-->
+	<style>
+		h1{
+			text-align: center;	
+		}
+		body{
+			font-family: Arial;
+			font-size: 16px;
+		}
+		.menu {
+		  background-color: #ccc;
+		  overflow: hidden;
+		}
+		.menu a{
+			float: right;
+			display: block;
+			color: #f2f2f2;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			font-size: 17px;
+			margin-right: 60px;
+			font-family: Arial;
+			font-size: 20px;
+		}
+		#mvlist{
+			margin: 0px auto;
+			padding: 0px auto;
+			width: 50%;
+			text-align: center;
+			margin-top: 40px;
+		}
+		#registerid{
+			margin: 0px auto;
+			padding: 10px auto;
+			width: 50%;
+			text-align: center;
+			margin-top: 40px;
+		}
+
+		#registerid input{
+			text-align: center;
+			width: 20em;
+			margin: 5px;
+			padding-bottom: 5px;
+		}
+		#registerid label{
+			float: left;
+			text-align: right;
+			padding-right: 0.5em;
+			margin: 0.5em;
+		}
+
+		#loginid{
+			margin-top: 20px;
+			text-align: center;
+		}
+		#loginid input{
+			text-align: center;
+			width: 20em;
+			margin: 5px;
+			padding-bottom: 5px;
+		}
+
+	</style>
+</head>
+<body>
+	
+	<h1>Welcome to My Movie World</h1>
+	{% if user.is_authenticated %}
+	<p>Welcome, {{user}}</p>
+	{% endif %}
+	<div class="menu">
+		<a href="/">Home</a>
+		
+		{% if user.is_authenticated %}
+		<a href="/accounts/logout">Logout</a>
+		{% else %}
+			<a href="/accounts/register">Registration</a>
+			<a href="/accounts/login">Login</a>
+		{% endif %}
+	</div>
+
+	
+	{% block content %}
+	<p>Placeholder</p>
+	{% endblock %}
+
+</body>
+</html>
